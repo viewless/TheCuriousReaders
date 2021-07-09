@@ -1,0 +1,38 @@
+.header-container {
+  background-color: cadetblue;
+  padding: 0.5rem 2rem;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+
+  .header-title {
+    color: whitesmoke;
+    text-align: center;
+    font-weight: 400;
+    letter-spacing: 3px;
+    margin-bottom: 0.1rem;
+  }
+
+  .buttons {
+    width: 6rem;
+    border: 2px solid whitesmoke;
+    outline: none;
+    border-radius: 10px;
+    overflow: hidden;
+    font-family: "Montserrat", sans-serif;
+    background-color: whitesmoke;
+    color: cadetblue;
+    font-size: 1.1rem;
+    margin-left: 20px;
+    padding: 2px;
+    margin-top: auto;
+    margin-bottom: auto;
+
+    &:hover {
+      border: 2px solid whitesmoke;
+      background-color: cadetblue;
+      color: whitesmoke;
+      cursor: pointer;
+    }
+  }
+}

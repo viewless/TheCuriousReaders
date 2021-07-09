@@ -1,0 +1,84 @@
+.header-container{
+    background-color: cadetblue;
+    padding: 0.5rem 2rem;
+    height: 10%;
+
+    .book-form-button {
+        width: 10rem;
+        border: 2px solid whitesmoke;
+        outline: none;
+        border-radius: 10px;
+        overflow: hidden;
+        font-family: "Montserrat", sans-serif;
+        background-color: whitesmoke;
+        color: cadetblue;
+        font-size: 1.1rem;
+        padding: 4px;
+        margin-right: 20px;
+        margin-top: auto;
+        margin-bottom: auto;
+    
+        &:hover {
+          border: 2px solid whitesmoke;
+          background-color: cadetblue;
+          color: whitesmoke;
+          cursor: pointer;
+        }
+      }
+}
+
+.footer-container {
+  margin-top: 2.5rem;
+  background-color: cadetblue;
+  padding: 0.5rem 2rem;
+  padding-bottom: 1rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  bottom: 0;
+  //If admin page is longer than the viewport height, change position to relative.
+  position: absolute;
+
+  .contacts-head {
+    color: whitesmoke;
+    font-weight: bolder;
+    margin: 0.5rem auto;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .contacts-main {
+    margin: 0 auto;
+
+    .contacts-address {
+      display: inline;
+      color: whitesmoke;
+      font-weight: bold;
+      letter-spacing: 0.05rem;
+      text-align: center;
+      margin-right: 0.5rem;
+    }
+
+    .contacts-address-main{
+        display: inline-block;
+        color: whitesmoke;
+        display: inline;
+    }
+
+    .contacts-phone-number{
+        display: inline;
+        color: whitesmoke;
+        font-weight: bold;
+        letter-spacing: 0.05rem;
+        text-align: center;
+        margin-left: 2rem;
+        margin-right: 0.5rem;
+    }
+
+    .contacts-phone-number-main{
+        display: inline-block;
+        color: whitesmoke;
+        display: inline;
+    }
+  }
+}

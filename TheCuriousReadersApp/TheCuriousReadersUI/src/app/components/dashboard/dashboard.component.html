@@ -1,0 +1,44 @@
+<app-header></app-header>
+<ngx-spinner></ngx-spinner>
+<div class="newbooks-table">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Remaining days</th>
+                <th>Return date</th>
+                <th>Request Additional Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="
+                let item of books
+                  | paginate
+                    : {
+                        id: 'newBooksPaginationControls',
+                        itemsPerPage: pageSize,
+                        currentPage: pageNumber,
+                        totalItems: totalItems
+                      }
+                ">
+               
+                <th>{{item.bookTitle}}</th>
+                <th>{{item.remainingDays}}</th>
+                <th>{{this.dateToReturn(item.returnBookDate)}} <a *ngIf="!!compareCurrentDateAndBookReturnDate(item.returnBookDate)" style="color: red"> - Return book as soon as possible.</a></th>
+                
+                <th>
+                <div tooltip="You have already requested additional time for that book." placement="left" *ngIf="!!item.isAdditionalTimeRequested; else dontShowToolTip">
+                    <button type="button" class="request-button" [disabled]="!!item.isAdditionalTimeRequested">Request more days</button>
+                </div>
+                <input [disabled]="!!item.isAdditionalTimeRequested" type="number" id="copies" min="1" oninput="validity.valid||(value='')" [(ngModel)]="item.requestedDays"
+                name="copiesAmount" #quantity="ngModel">
+                <ng-template #dontShowToolTip><button type="button"  class="request-button" (click)="requestAdditionalTime(item.id, item.requestedDays)" *ngIf="item.requestedDays != 0 && item.requestedDays != null;" >Request more days</button></ng-template>
+            </th>
+            </tr>
+        </tbody>
+    </table>
+
+    <pagination-controls style="text-align: center;" class="pagi" id="newBooksPaginationControls"
+        (pageChange)="getCurrentPageData((pageNumber = $event))">
+    </pagination-controls>
+</div>

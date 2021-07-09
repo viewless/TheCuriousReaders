@@ -1,0 +1,43 @@
+<app-header></app-header>
+<div class="books-table">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Cover</th>
+          <th>Genre</th>
+          <th>Quantity</th>
+          <th>Author name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="clickable-row"
+          *ngFor="
+            let item of bookData
+              | paginate
+                : {
+                    id: 'booksPaginationControls',
+                    itemsPerPage: pageSize,
+                    currentPage: pageNumber,
+                    totalItems: totalItems
+                  }
+          " [routerLink]="['/books/', item.id]">
+            <th>{{item.title}}</th>
+            <th>{{item.description}}</th>
+            <th><img class="cover" src= "{{item.coverUri}}" alt="book-cover"/></th>
+            <th>{{item.genre.name}}</th>
+            <th>{{item.quantity}}</th>
+            <th>{{item.author.name}}</th>
+          </tr>
+        </tbody>
+      </table>
+    
+      <pagination-controls style="text-align: center;" class="pagi" id="booksPaginationControls"
+        (pageChange)="getCurrentPageData((pageNumber = $event))">
+      </pagination-controls>
+    </div>
+    
+    <ng-template #emptyTable>
+      <div class="ifTableIsEmpty">There are no books currently in the library.</div>
+    </ng-template>

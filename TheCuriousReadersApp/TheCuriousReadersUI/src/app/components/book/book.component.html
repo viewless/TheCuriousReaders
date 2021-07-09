@@ -1,0 +1,94 @@
+<app-header></app-header>
+<ngx-spinner></ngx-spinner>
+<section class="container">
+    <div class="left-container">
+        <img src="../../assets/images/book-form-image.png" id="left-container-img" />
+        <h4>The Curious Readers Library</h4>
+    </div>
+
+    <div class="right-container">
+        <h1>Adding a book</h1>
+
+        <form #bookForm="ngForm" (ngSubmit)="onSubmit()" class="form" encoding type="multipart/form-data">
+           
+            <div class="form-group">
+                <label for="book-title" [ngClass]="{'filled' : bookModel.title}">Title</label>
+                <input type="text" id="title" required
+                minlength="2" maxlength="50"
+                [(ngModel)]="bookModel.title" name="title" 
+                #title="ngModel">
+            </div>
+
+            <div *ngIf="title.errors && (title.invalid && title.touched)">
+                <small class="invalid-validation" *ngIf="title.errors.required
+                    || (title.errors?.minlength || title.errors?.maxlength)
+                    || title.pristine">Title is required and should be between 2 and 50 characters long.</small>
+            </div>
+
+            <div class="book-description-div">
+                <label for="book-description" [ngClass]="{'filled' : bookModel.description}"></label>
+                <textarea placeholder="Book description" type="text" id="description"
+                    minlength = "10" maxlength="500" rows="5" cols="30" required
+                [(ngModel)]="bookModel.description" name="description" 
+                #description="ngModel">
+                </textarea>
+            </div>
+
+            <div *ngIf="description.errors && (description.invalid && description.touched)">
+                <small class="invalid-validation" *ngIf="description.errors.required 
+                || (description.errors?.minlength || description.errors?.maxlength)
+                || description.pristine">Description is required and should be between 10 and 500 characters long.</small>
+                <small class="invalid-validation" *ngIf="description.errors.pattern">Please provide a valid description.</small>
+            </div>
+
+            <div class="form-group">
+                <label for="book-quantity" [ngClass]="{'filled' : bookModel.quantity}">Quantity</label>
+                <input type="number" id="quantity"
+                min="1"
+                oninput="validity.valid||(value='')"
+                [(ngModel)]="bookModel.quantity" name="quantity"
+                #quantity="ngModel">
+            </div>
+
+            <div class="form-group">
+                <label for="book-author-name" [ngClass]="{'filled' : authorModel.name}">Author</label>
+                <input type="text" id="authorName" required
+                minlength="2" maxlength="50"
+                [(ngModel)]="authorModel.name" name="authorName" 
+                #authorName="ngModel">
+            </div>
+
+            <div *ngIf="authorName.errors && (authorName.invalid && authorName.touched)">
+                <small class="invalid-validation" *ngIf="authorName.errors.required
+                || (authorName.errors?.minlength || authorName.errors?.maxlength)  
+                || authorName.pristine">Author name is required and should be between 2 and 50 characters long.</small>
+            </div>
+
+            <div class="form-group">
+                <label for="book-cover" [ngClass]="{'filled' : cover}"></label>
+                <input type="file" id="cover" (change)="onSelectedFile($event)"
+                 name="cover" accept="image/png, image/jpeg"
+                >
+            </div>
+               
+            <select name="genre-reg" class="select" id="genre-reg" [(ngModel)]="bookModel.genre.name"
+            required pattern="{{genres}}"
+            [(ngModel)]="bookModel.genre.name" name="genre"
+            #genre="ngModel">>
+                <option value="" selected="true">Select Genre</option>
+                <option *ngFor="let genre of genres" value="{{genre}}" selected="false">{{genre}}</option>
+            </select>
+
+            <div *ngIf="genre.errors && (genre.invalid && genre.touched)">
+                <small class="invalid-validation" *ngIf="genre.errors.required 
+                || genre.pristine">Please select a genre.</small>
+            </div>
+
+            <button type="submit" class="book-button">Add Book</button>
+        </form>
+    </div>
+</section>  
+
+<app-error-message [errorMessage]='errorMsg' (click)='clearErrorMessage()'></app-error-message>
+<app-success-message [successMessage]='successMsg' (click)='clearSuccessMessage()'></app-success-message>
+

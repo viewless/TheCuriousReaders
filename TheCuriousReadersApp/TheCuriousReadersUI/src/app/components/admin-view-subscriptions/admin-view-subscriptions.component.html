@@ -1,0 +1,82 @@
+<ng-template #modalReject let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title" style="color: red;">Warning!</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p><strong>Are you sure you want to reject this subscription?</strong></p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="modal.close(rejectSubscriptionModal())">Yes</button>
+    <button type="button" class="btn btn-secondary" (click)="modal.close()">No</button>
+  </div>
+</ng-template>
+
+<ngx-spinner></ngx-spinner>
+
+<ng-template #modalApprove let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title" style="color: red;">Warning!</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p><strong>Are you sure you want to approve this subscription?</strong></p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-success" (click)="modal.close(approveSubscriptionModal())">Yes</button>
+    <button type="button" class="btn btn-secondary" (click)="modal.close()">No</button>
+  </div>
+</ng-template>
+
+<ng-template #emptyTable>
+  <div class="alert alert-info" role="alert">
+    <h4 class="alert-heading">Hello!</h4>
+    <p>There are currently no subscriptions to be reviewed.</p>
+  </div>
+</ng-template>
+
+<app-header></app-header>
+<div class="subscriptions-table" *ngIf="totalItems>0;else emptyTable">
+    <table class="table table-striped table-dark">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">First Name</th>
+          <th scope="col">Last Name</th>
+          <th scope="col">Book Title</th>
+          <th scope="col">Requested days (Editable)</th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="
+            let item of notReviewedSubscriptions
+              | paginate
+                : {
+                    id: 'newBooksPaginationControls',
+                    itemsPerPage: pageSize,
+                    currentPage: pageNumber,
+                    totalItems: totalItems
+                  }">
+            <th scope="row">{{item.firstName}}</th>
+            <th scope="row">{{item.lastName}}</th>
+            <th scope="row">{{item.bookTitle}}</th>
+            <th scope="row" id="request-days-id{{item.id}}" style="color: coral; border:2px solid coral;" contenteditable="true" onkeypress="if(event.keyCode < 48 || event.keyCode > 57){return false;}">{{item.requestedSubscriptionDays}}</th>
+            <th scope="row"><button type="button" class="btn btn-success" (click)="approveSubscription(item.id)">Approve Subscription</button></th>
+            <th scope="row"><button type="button" class="btn btn-danger" (click)="rejectSubscription(item.id)">Reject Subscription</button></th>
+          </tr>
+        </tbody>
+      </table>
+    
+      <pagination-controls style="text-align: center;" class="pagi" id="newBooksPaginationControls"
+        (pageChange)="getNonReviewedSubscriptionsPage((pageNumber = $event))">
+      </pagination-controls>
+</div>
+<app-error-message [errorMessage]='errorMsg' (click)='clearErrorMessage()'></app-error-message>
+<app-success-message [successMessage]='successMsg' (click)='clearSuccessMessage()'></app-success-message>
+

@@ -1,0 +1,39 @@
+<ngx-spinner></ngx-spinner>
+<section>
+    <div class="header-container">
+        <button class="buttons" (click)="goBack()" type="button">Back</button>
+        <h2 class='header-title'>The Curious Readers Library</h2>
+        <button class="buttons" (click)="registerRedirect()" type="button">Register</button>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <div class="left-container">
+            <img src="../../assets/mainpage-logo.png" id="left-container-img" />
+            <h4>The Curious Readers Library</h4>
+        </div>
+
+        <div class="right-container">
+
+            <h1>Login</h1>
+            <h4>Reading is power!</h4>
+
+            <form #loginForm="ngForm" action="" (ngSubmit)="onSubmit()" class="form">
+                <div class="form-group">
+                    <label for="email-reg" [ngClass]="{'filled' : loginModel.email}">Email:</label>
+                    <input type="email" [(ngModel)]="loginModel.email" id="email-reg" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password-reg" [ngClass]="{'filled' : loginModel.password}">Password:</label>
+                    <input type="password" [(ngModel)]="loginModel.password" id="password-reg" name="password" required>
+                </div>
+
+                <button type="submit" class="login-button" [disabled]="loginForm.invalid">Login</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<app-error-message [errorMessage]='errorMsg' (click)='clearErrorMessage()'></app-error-message>

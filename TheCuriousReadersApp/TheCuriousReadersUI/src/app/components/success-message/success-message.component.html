@@ -1,0 +1,7 @@
+<div class="success-popup" (click)="closePopUp()" *ngIf='successMessage != ""'>
+    <div class='success-main'>
+        <p class="success-msg"> {{successMessage}} </p>
+
+        <button class='success-button' (click)="closePopUp()">Ok</button>
+    </div>
+</div>

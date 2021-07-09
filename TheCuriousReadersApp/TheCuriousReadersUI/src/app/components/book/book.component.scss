@@ -1,0 +1,251 @@
+@import "~src/variables.scss";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 3rem 0;
+
+  @media (min-width: $mediumMediaWidth) {
+    flex-direction: row;
+  }
+
+  .left-container {
+    max-width: 768px;
+    padding: 2rem;
+
+    @media (min-width: $mediumMediaWidth) {
+      max-width: 50vw;
+      padding: 5rem;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    h4 {
+      color: cadetblue;
+      text-align: center;
+      font-size: 1.5rem;
+      margin-top: -30px;
+    }
+  }
+
+  .right-container {
+    text-align: center;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 50px;
+    margin-top: 5%;
+    border: 2px solid cadetblue;
+    border-radius: 10px;
+
+    @media (min-width: $mediumMediaWidth) {
+      width: 100%;
+    }
+
+    h1,
+    h4 {
+      margin-top: 40px;
+      color: cadetblue;
+    }
+
+    .form {
+      width: 100vw;
+      margin: auto;
+      padding: 0;
+      display: block;
+
+      @media (min-width: $smallMediaWidth) {
+        width: 100%;
+      }
+
+      .book-description-div{
+        padding: 0;
+
+        textarea{
+          width: 100%;
+          margin-top: 1.55rem;
+          border: 1px solid cadetblue;
+          border-radius: 10px;
+          overflow: hidden;
+          color: cadetblue;
+          padding: 0.5rem;
+          transition: all 0.2s ease-in-out;
+
+          &:hover,
+          &:active,
+          &:focus {
+            outline: none;
+          }
+
+          &:focus-within {
+            label {
+              top: 0.5rem;
+              font-size: 0.8rem;
+              background-color: white;
+            }
+          }
+  
+          .filled {
+            top: 0.5rem;
+            font-size: 0.8rem;
+            background-color: white;
+          }
+        }
+      }
+
+      .form-group {
+        position: relative;
+
+        label {
+          position: absolute;
+          top: 1.55rem;
+          left: 1rem;
+          margin: 0;
+          padding: 0 0.3rem;
+          z-index: 3;
+          font-weight: 600;
+          color: rgba($color: #333, $alpha: 0.6);
+          background-color: transparent;
+          transition: all 0.2s ease-in-out;
+          pointer-events: none;
+        }
+
+        input {
+          padding: 0.5rem 1rem;
+          margin-top: 1rem;
+          border: 1px solid cadetblue;
+          border-radius: 10px;
+          overflow: hidden;
+          color: cadetblue;
+          outline: none;
+          min-width: 380px !important;
+          max-width: 380px !important;
+
+          &:hover,
+          &:active,
+          &:focus {
+            outline: none;
+          }
+        }
+
+        &:focus-within {
+          label {
+            top: 0.5rem;
+            font-size: 0.8rem;
+            background-color: white;
+          }
+        }
+
+        .filled {
+          top: 0.5rem;
+          font-size: 0.8rem;
+          background-color: white;
+        }
+      }
+
+      .select {
+        width: 100%;
+        margin-top: 1rem;
+        padding: 0.5rem 1rem;
+        border: 1px solid cadetblue;
+        border-radius: 10px;
+        overflow: hidden;
+        color: cadetblue;
+        min-width: 380px !important;
+        max-width: 380px !important;
+        outline: none;
+
+        &:hover,
+        &:active,
+        &:focus {
+          outline: none;
+        }
+        option {
+          width: 100%;
+        }
+      }
+
+      .book-button {
+        border: 2px solid cadetblue;
+        outline: none;
+        border-radius: 10px;
+        overflow: hidden;
+        background-color: cadetblue;
+        color: whitesmoke;
+        font-family: "Montserrat", sans-serif;
+        font-size: 1.5rem;
+        padding: 0.5rem 1rem;
+        margin-top: 2rem;
+
+        &:hover {
+          border: 2px solid cadetblue;
+          background-color: whitesmoke;
+          color: cadetblue;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+
+.invalid-validation {
+  color: red;
+}
+
+.footer-container {
+  margin-top: 2.5rem;
+  background-color: cadetblue;
+  padding: 0.5rem 2rem;
+  padding-bottom: 1rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  bottom: 0;
+  position: relative;
+
+  .contacts-head {
+    color: whitesmoke;
+    font-weight: bolder;
+    margin: 0.5rem auto;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .contacts-main {
+    margin: 0 auto;
+
+    .contacts-address {
+      display: inline;
+      color: whitesmoke;
+      font-weight: bold;
+      letter-spacing: 0.05rem;
+      text-align: center;
+      margin-right: 0.5rem;
+    }
+
+    .contacts-address-main{
+        display: inline-block;
+        color: whitesmoke;
+        display: inline;
+    }
+
+    .contacts-phone-number{
+        display: inline;
+        color: whitesmoke;
+        font-weight: bold;
+        letter-spacing: 0.05rem;
+        text-align: center;
+        margin-left: 2rem;
+        margin-right: 0.5rem;
+    }
+
+    .contacts-phone-number-main{
+        display: inline-block;
+        color: whitesmoke;
+        display: inline;
+    }
+  }
+}

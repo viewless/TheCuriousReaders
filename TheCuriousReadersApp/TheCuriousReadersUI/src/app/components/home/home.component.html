@@ -1,0 +1,60 @@
+<div class="header-container">
+    <button class="admin-button" (click)="openAdminPage()" *ngIf="!!isUserAdmin(); else dashboardButton">Admin Panel</button>
+
+    <ng-template #dashboardButton>
+        <button class="admin-button" (click)="openDashboard()" type="button">Dashboard</button>
+    </ng-template>
+
+  <div class="search">
+    <label for="search-field" [ngClass]="{'filled' : textToSearchFor}">Search:</label>
+    <input type="text" [(ngModel)]="textToSearchFor" id="search-field" name="search-field" required>
+
+  <ng-multiselect-dropdown class="multiselect"
+    [placeholder]="'Select Filter'"
+    [settings]="dropdownSettings"
+    [data]="dropdownList"
+    [(ngModel)]="selectedItems"
+    >
+  </ng-multiselect-dropdown>
+
+    <form action="" (ngSubmit)="onSubmit()">
+      <button type="submit" class="search-button">Search</button>
+    </form>
+  </div>
+
+  <form action="" (ngSubmit)="logOut()">
+    <button type="submit" class="logout-button">Logout</button>
+  </form>
+</div>
+<br>
+
+<div *ngIf="bookCountInResponse.books.length > 0" style="text-align: center;" class="row">
+  <h2 style="margin-bottom: 3rem;">Search results:</h2>
+
+  <div *ngFor="let result of bookCountInResponse.books 
+    | paginate
+    : {
+        id: 'searchPaginationControls',
+        itemsPerPage: 5,
+        currentPage: searchPageNumber,
+        totalItems: bookCountInResponse.totalCount
+      }" class="col-md-2" style="margin: 0 auto">
+    <div class="card">
+      <div class="card-text-center"></div>
+      <img (click)="openBookDetails(result.id)" class="card-img-top" style="height:400px"src={{result.coverUri}} alt="Placeholder">
+      <div class="card-body">
+        <h5 class="card-title">{{result.title}}</h5>
+        <p class="card-text">From: {{result.author.name}}</p>
+        <p class="card-text">Genre: {{result.genre.name}}</p>
+      </div>
+    </div>
+  </div>
+
+  <pagination-controls style="text-align: center; font-size: 20px; margin-top: 2rem;" class="pagi"
+    id="searchPaginationControls" (pageChange)="getCurrentPageData((searchPageNumber = $event))">
+  </pagination-controls>
+</div>
+
+<app-error-message [errorMessage]='errorMsg' (click)='clearErrorMessage()'></app-error-message>
+<app-success-message [successMessage]='successMsg' (click)='clearSuccessMessage()'></app-success-message>
+<app-new-books></app-new-books>

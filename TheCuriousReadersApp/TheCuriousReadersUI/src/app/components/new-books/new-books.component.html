@@ -1,0 +1,48 @@
+<div class="newbooks-text">Books added within the last 2 weeks: {{totalItems}}</div>
+<br>
+
+<div class="newbooks-table">
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Cover</th>
+      <th>Genre</th>
+      <th>Quantity</th>
+      <th>Author name</th>
+      <th>Added at</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="clickable-row"
+      *ngFor="
+        let item of books
+          | paginate
+            : {
+                id: 'newBooksPaginationControls',
+                itemsPerPage: pageSize,
+                currentPage: pageNumber,
+                totalItems: totalItems
+              }
+      " [routerLink]="['/books/', item.id]">
+        <th>{{item.title}}</th>
+        <th>{{item.description}}</th>
+        <th><img class="cover" src= "{{item.coverUri}}" alt="book-cover"/></th>
+        <th>{{item.genre.name}}</th>
+        <th>{{item.quantity}}</th>
+        <th>{{item.author.name}}</th>
+        <th>{{item.createdAt | date: 'dd/MM/yyyy'}}</th>
+      </tr>
+    </tbody>
+  </table>
+
+  <pagination-controls style="text-align: center;" class="pagi" id="newBooksPaginationControls"
+    (pageChange)="getCurrentPageData((pageNumber = $event))">
+  </pagination-controls>
+</div>
+
+<ng-template #emptyTable>
+  <div class="ifTableIsEmpty"></div>
+</ng-template>
+

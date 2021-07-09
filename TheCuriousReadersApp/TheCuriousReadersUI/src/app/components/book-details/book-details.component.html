@@ -1,0 +1,187 @@
+<ng-template #modalDelete let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title" style="color: red;">Warning!</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p><strong>Are you sure?</strong></p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="modal.close(onModalAcceptedDeletion())">Yes</button>
+    <button type="button" class="btn btn-secondary" (click)="modal.close()">No</button>
+  </div>
+</ng-template>
+
+<ngx-spinner></ngx-spinner>
+<app-header></app-header>
+<section class="book-comment">
+  <div class="book-details" *ngIf="!!bookData; else bookDoesNotExist">
+    <div *ngIf="!!isUserAdmin()">
+      <img src={{bookData.coverUri}}
+        style="margin-bottom: 5rem; margin-top: 3rem; border: 10px solid whitesmoke; border-radius: 10px;" />
+      <hr style="display: block; border-color: 5px solid whitesmoke;">
+      <div class="form-group">
+        <label for="book-cover" [ngClass]="{'filled' : cover}"></label>
+        <input type="file" id="cover" (change)="onSelectedFile($event)" name="cover" accept="image/png, image/jpeg">
+      </div>
+    </div>
+    <div *ngIf="!!!isUserAdmin()">
+      <img src={{bookData.coverUri}}
+        style="margin-bottom: 5rem; margin-top: 3rem; border: 10px solid whitesmoke; border-radius: 10px;" />
+      <hr style="display: block; border-color: 5px solid whitesmoke;">
+    </div>
+    <form>
+      <div class="form-group">
+        <form (ngSubmit)="editBook()">
+          <div *ngIf="!!isUserAdmin()">
+            <h1> Title:
+              <input autocomplete="off" type="text" [(ngModel)]="bookData.title" [value]="bookData.title"
+                name="title" />
+            </h1>
+
+            <h2> Author:
+              <input autocomplete="off" type="text" [(ngModel)]="bookData.author.name" [value]="bookData.author.name"
+                name="author" />
+            </h2>
+
+            <p> Description:
+              <input autocomplete="off" type="text" [(ngModel)]="bookData.description" [value]="bookData.description"
+                name="description" />
+            </p>
+
+            <h3> Quantity:
+              <input autocomplete="off" type="text" [(ngModel)]="bookData.quantity" [value]="bookData.quantity"
+                name="quantity" onkeypress="if(event.keyCode < 49 || event.keyCode > 57){return false;}" />
+            </h3>
+
+            <h3> Genre:
+              <input autocomplete="off" type="text" [(ngModel)]="bookData.genre.name" [value]="bookData.genre.name"
+                name="genre" />
+            </h3>
+
+            <h1>Subscribers: {{totalSubscribers}}</h1>
+            <button class="btn btn-dark" type="submit">Edit</button>
+          </div>
+        </form>
+        <div *ngIf="!!!isUserAdmin()">
+          <h1> {{ bookData.title }} </h1>
+          <h2>Author - {{ bookData.author.name }}</h2>
+          <p>
+            {{ bookData.description }}
+          </p>
+          <h3>{{ bookData.quantity }} copies left</h3>
+          <h1>Subscribers: {{totalSubscribers}}</h1>
+        </div>
+      </div>
+      <div *ngIf="!isUserAdmin();">
+
+        <div *ngIf="!!checkIfUserIsAuthenticated(); else notAuthenticated">
+          <label for="copiesAmount" [ngClass]="{'filled' : copiesAmount}">Copies: </label>
+          <input type="number" id="copies" min="1" oninput="validity.valid||(value='')" [(ngModel)]="copiesAmount"
+            name="copiesAmount" #quantity="ngModel">
+          <span tooltip="The book is unavailable for subscription at the moment." placement="right"
+            *ngIf="!!!bookData.isAvailable; else dontShowToolTip">
+            <button type="subscribe" class="book-button" *ngIf="!isUserAdmin();" [disabled]="!!!bookData.isAvailable" (click)="OnSubscribe()">Subscribe</button>
+          </span>
+          <ng-template #dontShowToolTip><button type="subscribe" class="book-button" *ngIf="!isUserAdmin();"
+              (click)="OnSubscribe()">Subscribe</button></ng-template>
+
+          <ng-template #notAuthenticated>
+            <h5>You need to <a [routerLink]="['/login']" class="subscribe-not-authenticated">authenticate</a> yourself
+              in order to be able to subscribe for a book.</h5>
+          </ng-template>
+        </div>
+
+      </div>
+
+    </form>
+    <div>
+      <button type=button class="delete-button" *ngIf="isUserAdmin();" (click)="OnDeleteBook()">Delete Book</button>
+    </div>
+    <div>
+      <button type=button class="delete-button" *ngIf="!!isUserAdmin() && !!bookData.isAvailable;"
+        (click)="changeBookAvailability(false)">Make unavailable</button>
+      <button type=button class="delete-button" *ngIf="!!isUserAdmin() && !!!bookData.isAvailable;"
+        (click)="changeBookAvailability(true)">Make available</button>
+    </div>
+
+  </div>
+  <div class="comments" *ngIf="!!bookData;">
+    <div *ngIf="totalItems > 0" class="comments-list">
+
+    <div class="review" *ngFor="
+            let item of comments
+              | paginate 
+                : {
+                    id: 'paginatedComments',
+                    itemsPerPage: pageSize,
+                    currentPage: pageNumber,
+                    totalItems: totalItems
+                  }
+          ">
+        <div *ngIf="isUserAdmin()">
+            <div class="headline">
+                <h4>{{item.userFirstName}} {{item.userLastName}}</h4>
+                <ngb-rating [readonly]="true" [rate]="item.rating" style="margin-bottom: 1.5rem;"></ngb-rating>
+            </div>
+            <p>{{item.commentBody}}</p>
+            <div>
+                <button class="delete-button" *ngIf="isUserAdmin();" (click)="OnDeleteComment(item.id)">Delete Comment</button>
+                <button class="approve-button" *ngIf="isUserAdmin();" [disabled]="!!item.isApproved" (click)="OnApproveComment(item.id, item.isApproved)">Approve Comment</button>
+            </div>
+        </div>
+        <div *ngIf="item.isApproved && !isUserAdmin()">
+            <div class="headline">
+                <h4>{{item.userFirstName}} {{item.userLastName}}</h4>
+                <ngb-rating [readonly]="true" [rate]="item.rating" style="margin-bottom: 1.5rem;"></ngb-rating>
+            </div>
+            <p>{{item.commentBody}}</p>
+        </div>
+    </div>
+
+      <pagination-controls style="text-align: center; margin:0 auto;" class="pagi" id="paginatedComments"
+        (pageChange)="getCurrentPageData((pageNumber = $event))"></pagination-controls>
+
+    </div>
+
+    <div class="comment-form-admin" *ngIf="!isUserAdmin();">
+    <div class="comment-form" *ngIf="!!checkIfUserIsAuthenticated(); else notAuthenticated">
+      <h3>Leave rating</h3>
+
+      <ngb-rating [(ngModel)]="currentRate" [rate]="currentRate" style="margin-bottom: 1.5rem;"></ngb-rating>
+
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/themes/prism.css" />
+
+      <form #resetForm="ngForm" id="algin-form">
+        <div class="comments-text">
+
+          <label for="message-box" [ngClass]="{ filled: commentModel.commentBody }">Leave a comment</label>
+
+          <textarea [(ngModel)]="commentModel.commentBody" name="msg" id="message-box" msg cols="30" rows="5"
+            class="form-control"></textarea>
+        </div>
+
+        <div class="form-group">
+          <button type="button" id="comment-button" class="btn" (click)="OnComment(); resetForm.resetForm()"> Post Comment </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  </div>
+</section>
+<ng-template #notAuthenticated>
+  <h5>You need to <a [routerLink]="['/login']" class="comment-not-authenticated">authenticate</a> yourself in order to
+    be able to leave a comment for a book.</h5>
+</ng-template>
+
+<ng-template #bookDoesNotExist>
+  <h3>Book with that id does not exist in our database.</h3>
+</ng-template>
+
+<app-error-message [errorMessage]='errorMsg' (click)='clearErrorMessage()'></app-error-message>
+<app-success-message [successMessage]='successMsg' (click)='clearSuccessMessage()'></app-success-message>
+

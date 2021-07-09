@@ -1,0 +1,39 @@
+.newbooks-text{
+    
+    height: 100%;
+    margin-top: 3%;
+    text-align: center;
+    color: navy;
+    font-weight: bold;
+}
+
+.newbooks-table{
+    margin-bottom: 8%;
+    margin-right: 3%;
+    margin-left: 3%;
+    border-radius: 10px;
+    border: 2px solid black;
+    padding: 3%;
+
+    table{
+        margin-bottom: 3rem;
+        tr{
+            &:hover {
+                color: rgb(54, 55, 55);
+            }
+        }
+    }
+}
+
+.ifTableIsEmpty{
+    min-height: calc(100vh - 445px);
+}
+
+.clickable-row{
+    cursor: pointer;
+}
+
+.cover {
+    width: 60px;
+}
+

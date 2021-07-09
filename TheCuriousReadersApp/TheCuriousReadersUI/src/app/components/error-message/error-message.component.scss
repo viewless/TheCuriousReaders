@@ -1,0 +1,52 @@
+.error-popup {
+    height: 100%;
+    overflow-y: hidden;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    z-index: 1000;
+    text-align: center;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    backdrop-filter: blur(6px);
+}
+
+.error-main {
+    margin-bottom: 20%;
+    border: 4px solid rgb(255, 59, 48);
+    border-radius: 10px;
+    backdrop-filter: blur(3px);
+    background-color: whitesmoke;
+    padding: 1.5rem 3rem;
+    width: max-content;
+}
+
+.error-msg {
+    margin-top: 0;
+    color: rgb(255, 59, 48);
+    font-weight: bold;
+    font-size: 1.25rem;
+}
+
+.error-button {
+    border: 2px solid cadetblue;
+    outline: none;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: cadetblue;
+    color: whitesmoke;
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.5rem;
+    padding: 0.5rem 1rem;
+
+    &:hover {
+      border: 2px solid cadetblue;
+      background-color: whitesmoke;
+      color: cadetblue;
+      cursor: pointer;
+    }
+}

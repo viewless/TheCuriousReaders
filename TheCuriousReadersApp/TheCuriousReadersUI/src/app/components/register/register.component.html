@@ -1,0 +1,196 @@
+<ngx-spinner></ngx-spinner>
+<section>
+        <div class="header-container">
+            <button class="buttons" (click)="goBack()" type="button">Back</button>
+            <h2 class='header-title'>The Curious Readers Library</h2>
+            <button class="buttons" (click)="loginRedirect()" type="button">Login</button>
+        </div>
+    </section>
+
+<section class="container">
+    <div class="left-container">
+        <img src="../../assets/mainpage-logo.png" id="left-container-img" />
+        <h4>The Curious Readers Library</h4>
+    </div>
+
+    <div class="right-container">
+        <h1>Register</h1>
+        <h4>Reading is power!</h4>
+
+        <form #registerForm="ngForm" (ngSubmit)="onSubmit()" class="form">
+            <div class="form-group">
+                <label for="first-name-reg" [ngClass]="{'filled' : userModel.firstName}">First name</label>
+                <input type="text" id="firstName"
+                minlength="2" maxlength="35"
+                required pattern="^[A-Z][a-zA-Z]*$"
+                [(ngModel)]="userModel.firstName" name="firstName" 
+                #firstName="ngModel">
+
+                <div *ngIf="firstName.errors && (firstName.invalid && firstName.touched)">
+                    <small class="invalid-validation" *ngIf="firstName.errors.required 
+                    || (firstName.errors?.minlength || firstName.errors?.maxlength)  
+                    || firstName.pristine">First name should be between 2 and 35 characters. </small>
+                    <small class="invalid-validation" *ngIf="firstName.errors.pattern">Please provide a valid first name.</small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="last-name-reg" [ngClass]="{'filled' : userModel.lastName}">Last name</label>
+                <input type="text" id="lastName"
+                minlength="2" maxlength="35"
+                required pattern="^[A-Z][a-zA-Z]*$"
+                [(ngModel)]="userModel.lastName" name="lastName" 
+                #lastName="ngModel">
+
+                <div *ngIf="lastName.errors && (lastName.invalid && lastName.touched)">
+                    <small class="invalid-validation" *ngIf="lastName.errors.required 
+                    || (lastName.errors?.minlength || lastName.errors?.maxlength)  
+                    || lastName.pristine">Last name should be between 2 and 35 characters. </small>
+                    <small class="invalid-validation" *ngIf="lastName.errors.pattern">Please provide a valid last name.</small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="userModel.emailAddress" [ngClass]="{'filled' : userModel.emailAddress}">Email Address</label>
+                <input type="text" id="emailAddress"
+                required pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"
+                [(ngModel)]="userModel.emailAddress" name="emailAddress"
+                #emailAddress="ngModel">
+
+                <div *ngIf="emailAddress.errors && (emailAddress.invalid && emailAddress.touched)">
+                    <small class="invalid-validation" *ngIf="emailAddress.errors.required 
+                    || emailAddress.pristine">Email address is required. </small>
+                    <small class="invalid-validation" *ngIf="emailAddress.errors.pattern">
+                        Please provide a valid email address.</small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="phone-number-reg" [ngClass]="{'filled' : userModel.phoneNumber}">Phone number</label>
+                <input type="text" id="phoneNumber"
+                required pattern="(08)[7-9 ][0-9 ]{7}"
+                [(ngModel)]="userModel.phoneNumber" name="phoneNumber"
+                #phoneNumber="ngModel">
+
+                <div *ngIf="phoneNumber.errors && (phoneNumber.invalid && phoneNumber.touched)">
+                    <small class="invalid-validation" *ngIf="phoneNumber.errors.required 
+                    || phoneNumber.pristine">Phone number is required. </small>
+                    <small class="invalid-validation" *ngIf="phoneNumber.errors.pattern">
+                        Please provide a valid phone number with 10 numbers.</small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="password-reg" [ngClass]="{'filled' : userModel.password}">Password</label>
+                <input type="password" id="password"
+                required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#^()-=~`_<>'[\]{}\\|&quot;@$!%*?&])[A-Za-z\d#^()-=~`_<>'[\]{}\\|&quot;@$!%*?&]{10,}$"
+                [(ngModel)]="userModel.password" name="password"
+                #password="ngModel">
+
+                <div *ngIf="password.errors && (password.invalid && password.touched)">
+                    <small class="invalid-validation" *ngIf="password.errors.required 
+                    || password.pristine">Password is required. </small>
+                    <small class="invalid-validation" *ngIf="password.errors.pattern">
+                        Please provide a valid password with at least 10 characters. 
+                        With at least one lowercase and uppercase character, symbol and number.</small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="confirm-password-reg" [ngClass]="{'filled' : userModel.confirmPassword}">Confirm password</label>
+                <input type="password" id="confirmPassword"
+                required
+                ngValidateEqual="password"
+                [(ngModel)]="userModel.confirmPassword" name="confirmPassword"
+                #confirmPassword="ngModel">
+
+                <div *ngIf="confirmPassword.errors && (confirmPassword.invalid && confirmPassword.touched)">
+                    <small class="invalid-validation" *ngIf="confirmPassword.errors.required 
+                    || confirmPassword.pristine">Confirm password is required. </small>
+                    <small class="invalid-validation" *ngIf="confirmPassword.hasError('notEqual')">
+                        Confirm password and password do not match.</small>
+                </div>
+            </div>
+
+            <select name="country-reg" class="select" id="country-reg" [(ngModel)]="userModel.address.country"
+            required pattern="{{country.value}}"
+            [(ngModel)]="userModel.address.country" name="country"
+            #country="ngModel">>
+                <option value="" selected="true">Select Country</option>
+                <option *ngFor="let country of countries" value="{{country}}" selected="false">{{country}}</option>
+            </select>
+
+            <div *ngIf="country.errors && (country.invalid && country.touched)">
+                <small class="invalid-validation" *ngIf="country.errors.required 
+                || country.pristine">Country is required. </small>
+                <small class="invalid-validation" *ngIf="country.errors.pattern">
+                    Please select a country.</small>
+            </div>
+
+            <div class="form-group">
+                <label for="city-reg" [ngClass]="{'filled' : userModel.address.city}">City</label>
+                <input type="text" id="city"
+                minlength="2" maxlength="35"
+                required pattern="^[A-Z].*[a-zA-Z]$"
+                [(ngModel)]="userModel.address.city" name="city"
+                #city="ngModel">
+
+                <div *ngIf="city.errors && (city.invalid && city.touched)">
+                    <small class="invalid-validation" *ngIf="city.errors.required || (city.errors?.minlength 
+                    || city.errors?.maxlength)  || city.pristine">
+                    City is required and should be between 2 and 35 characters. </small>
+                    <small class="invalid-validation" *ngIf="city.errors.pattern">Please provide a valid city format.</small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="street-reg" [ngClass]="{'filled' : userModel.address.street}">Street</label>
+                <input type="text" id="street"
+                minlength="2" maxlength="35"
+                required pattern="^[A-Z].*[a-zA-Z]$"
+                [(ngModel)]="userModel.address.street" name="street"
+                #street="ngModel">
+
+                <div *ngIf="street.errors && (street.invalid && street.touched)">
+                    <small class="invalid-validation" *ngIf="street.errors.required || (street.errors?.minlength 
+                    || street.errors?.maxlength)  || street.pristine">
+                    Street is required and should be between 2 and 35 characters. </small>
+                    <small class="invalid-validation" *ngIf="street.errors.pattern">Please provide a valid street format.</small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="street-number-reg" [ngClass]="{'filled' : userModel.address.streetNumber}">Street Number</label>
+                <input type="text" id="streetNumber"
+                minlength="1" maxlength="10"
+                required
+                [(ngModel)]="userModel.address.streetNumber" name="streetNumber"
+                #streetNumber="ngModel">
+
+                <div *ngIf="streetNumber.errors && (streetNumber.invalid && streetNumber.touched)">
+                    <small class="invalid-validation" *ngIf="streetNumber.errors.required || (streetNumber.errors?.minlength 
+                    || streetNumber.errors?.maxlength)  || streetNumber.pristine">
+                    Street number is required and should be between 1 and 10 characters. </small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="building-reg" [ngClass]="{'filled' : userModel.address.buildingNumber}">Building Number (optional)</label>
+                <input type="text" [(ngModel)]="userModel.address.buildingNumber" id="building-reg" name="building">
+            </div>
+            <div class="form-group">
+                <label for="apartment-reg" [ngClass]="{'filled' : userModel.address.apartmentNumber}">Apartment Number (optional)</label>
+                <input type="text" [(ngModel)]="userModel.address.apartmentNumber" id="apartment-reg" name="apartment">
+            </div>
+            <div class="form-group">
+                <label for="additional-info-reg" [ngClass]="{'filled' : userModel.address.additionalInfo}">Additional Info (optional)
+                    </label>
+                <input type="text" [(ngModel)]="userModel.address.additionalInfo" id="additional-info-reg" name="additional-info">
+            </div>
+
+            <button type="submit" class="register-button" [disabled]="registerForm.form.invalid">Register</button>
+        </form>
+    </div>
+</section>
+
+<app-error-message [errorMessage]='errorMsg' (click)='clearErrorMessage()'></app-error-message>
+<app-success-message [successMessage]='successMsg' (click)='clearSuccessMessage()'></app-success-message>

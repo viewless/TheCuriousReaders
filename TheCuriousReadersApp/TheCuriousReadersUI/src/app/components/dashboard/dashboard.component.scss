@@ -1,0 +1,112 @@
+.newbooks-text{
+    
+    height: 100%;
+    margin-top: 3%;
+    text-align: center;
+    color: navy;
+    font-weight: bold;
+}
+
+.newbooks-table{
+    margin-top: 5%  ;
+    margin-bottom: 8%;
+    margin-right: 3%;
+    margin-left: 3%;
+    border-radius: 10px;
+    border: 2px solid black;
+    padding: 3%;
+
+    .table{
+        margin-bottom: 3rem;
+        .ng-star-inserted{
+          margin-bottom: .65rem;
+            &:hover {
+                color: rgb(54, 55, 55);
+            }
+        }
+    }
+}
+
+.ifTableIsEmpty{
+    min-height: calc(100vh - 445px);
+}
+
+.clickable-row{
+    cursor: pointer;
+}
+
+.cover {
+    width: 60px;
+}
+// leave it that way temporally
+.footer-container {
+    clear: both;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-color: cadetblue;
+    padding: 0.5rem 2rem;
+    padding-bottom: 1rem;
+    width: 100%;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+  
+    .contacts-head {
+      color: whitesmoke;
+      font-weight: bolder;
+      margin: 0.5rem auto;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+  
+    .contacts-main {
+      margin: 0 auto;
+  
+      .contacts-address {
+        display: inline;
+        color: whitesmoke;
+        font-weight: bold;
+        letter-spacing: 0.05rem;
+        text-align: center;
+        margin-right: 0.5rem;
+      }
+  
+      .contacts-address-main{
+          display: inline-block;
+          color: whitesmoke;
+          display: inline;
+      }
+  
+      .contacts-phone-number{
+          display: inline;
+          color: whitesmoke;
+          font-weight: bold;
+          letter-spacing: 0.05rem;
+          text-align: center;
+          margin-left: 2rem;
+          margin-right: 0.5rem;
+      }
+  
+      .contacts-phone-number-main{
+          display: inline-block;
+          color: whitesmoke;
+          display: inline;
+      }
+    }
+  }
+
+.request-button{
+  background-color: #c0c7c0;
+  color: rgb(10, 10, 10);
+  border-radius: 3px;
+  &:disabled {
+    background-color: #fdfdfd;
+  }
+  &:hover{
+    &:not([disabled]) {
+      background-color: rgb(14, 153, 21);
+    }
+  }
+}
+
