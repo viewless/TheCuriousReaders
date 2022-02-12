@@ -46,5 +46,7 @@ Serve the project
 As you can see on the photo the cover of the book is not available. This is because images are stored in blob storage. Unfortenately I don't have subscribtion to it anymore :(
 ![image](https://user-images.githubusercontent.com/36667350/153722970-e364989e-5f10-448b-a1a4-f9b08738863e.png)
 
-## There are more functionalities but I don't want to tell you everything here :)
+## Here is the swagger with all the endpoint
+![image](https://user-images.githubusercontent.com/36667350/153723198-36eb15ef-c853-4261-9eda-db520b8506c9.png)
+
 
