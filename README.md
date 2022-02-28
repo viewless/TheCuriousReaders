@@ -1,5 +1,5 @@
 <div align="center">  
-  <h3 align="center">TheCuriousReaders</h3>
+  <h1 align="center">TheCuriousReaders</h1>
 </div>
 
 <!-- ABOUT THE PROJECT -->
